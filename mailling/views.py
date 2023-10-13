@@ -1,6 +1,5 @@
 import random
 
-from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import Http404
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView, TemplateView
@@ -14,7 +13,6 @@ from mailling.services import send_message_email, get_cache_count_mailling, get_
 class MaillingCreateView(CreateView):
     model = Mailling
     form_class = MaillingForm
-    # permission_required = 'mailling.add_mailling'
     success_url = reverse_lazy('mailling:mailling_list')
 
     def form_valid(self, form):
@@ -52,7 +50,6 @@ class MaillingDetailView(DetailView):
 class MaillingUpdateView(UpdateView):
     model = Mailling
     form_class = MaillingForm
-    # permission_required = 'mailling.change_mailling'
 
     def get_success_url(self):
         return reverse('mailling:mailling_view', args=[self.kwargs.get('pk')])
@@ -72,11 +69,10 @@ class MaillingUpdateView(UpdateView):
 class MaillingDeleteView(DeleteView):
     model = Mailling
     success_url = reverse_lazy('mailling:mailling_list')
-    # permission_required = 'mailling.delete_mailling'
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
-        if self.object.owner != self.request.user:
+        if self.object.owner != self.request.user and not self.request.user.is_staff:
             raise Http404
         return self.object
 
@@ -90,10 +86,9 @@ class LogsListView(ListView):
         return context
 
 
-class MessageCreateView( CreateView):
+class MessageCreateView(CreateView):
     model = Message
     form_class = MessageForm
-    # permission_required = 'mailling.add_message'
 
     def get_success_url(self, *args, **kwargs):
         return reverse('mailling:mailling_list')
@@ -106,11 +101,11 @@ class MessageCreateView( CreateView):
         return super().form_valid(form)
 
 
+
 class MessageUpdateView(UpdateView):
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy('mailling:mailling_list')
-    # permission_required = 'mailling.change_message'
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
@@ -122,7 +117,6 @@ class MessageUpdateView(UpdateView):
 class MessageDeleteView(DeleteView):
     model = Message
     success_url = reverse_lazy('mailling:mailling_list')
-    # permission_required = 'mailling.delete_message'
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
