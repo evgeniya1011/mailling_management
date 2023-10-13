@@ -11,10 +11,10 @@ from mailling.models import Mailling, Logs, Message
 from mailling.services import send_message_email, get_cache_count_mailling, get_cache_count_client
 
 
-class MaillingCreateView(PermissionRequiredMixin, CreateView):
+class MaillingCreateView(CreateView):
     model = Mailling
     form_class = MaillingForm
-    permission_required = 'mailling.add_mailling'
+    # permission_required = 'mailling.add_mailling'
     success_url = reverse_lazy('mailling:mailling_list')
 
     def form_valid(self, form):
@@ -96,10 +96,10 @@ class LogsListView(ListView):
         return context
 
 
-class MessageCreateView(PermissionRequiredMixin, CreateView):
+class MessageCreateView( CreateView):
     model = Message
     form_class = MessageForm
-    permission_required = 'mailling.add_message'
+    # permission_required = 'mailling.add_message'
 
     def get_success_url(self, *args, **kwargs):
         return reverse('mailling:mailling_list')
@@ -143,7 +143,6 @@ class MainView(TemplateView):
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
         context_data['title'] = "Добро пожаловать в сервис управления рассылками!"
-
         context_data['object_list'] = random.sample(list(Blog.objects.all()), 3)
         context_data['mailling'] = get_cache_count_mailling()
         context_data['active_mailling'] = Mailling.objects.filter(status='started').count()

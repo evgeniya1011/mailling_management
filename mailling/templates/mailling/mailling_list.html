@@ -1,14 +1,10 @@
 {% extends 'client/base.html' %}
 {% block content %}
 <div class="col-12 mb-5">
-  {% if perms.mailling.add_message %}
     <a href="{% url 'mailling:create' %}" class="btn btn-primary my-2">Создать сообщение</a>
-  {% endif %}
 </div>
 <div class="col-12 mb-5">
-  {% if perms.mailling.add_mailling %}
     <a href="{% url 'mailling:mailling_create' %}" class="btn btn-primary my-2">Создать рассылку</a>
-  {% endif %}
 </div>
 <div class="row">
   {% for object in object_list %}
