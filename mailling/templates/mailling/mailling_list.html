@@ -16,20 +16,20 @@
         <div class="d-flex justify-content-between align-items-center">
           <div class="btn-group-center">
             <a href="{% url 'mailling:mailling_view' object.pk %}" class="btn btn-sm btn-outline-secondary">Просмотр рассылки</a>
-            {% if perms.mailling.change_mailling %}
+<!--            {% if perms.mailling.change_mailling %}-->
               <a href="{% url 'mailling:mailling_edit' object.pk %}" type="button" class="btn btn-sm btn-outline-secondary">Редактирование рассылки</a>
-            {% endif %}
-            {% if perms.mailling.delete_mailling %}
+<!--            {% endif %}-->
+<!--            {% if perms.mailling.delete_mailling %}-->
                 <a href="{% url 'mailling:mailling_delete' object.pk %}" type="button" class="btn btn-sm btn-outline-danger">Удаление рассылки</a>
-            {% endif %}
+<!--            {% endif %}-->
           </div>
           <div class="btn-group-center">
-            {% if perms.mailling.change_message %}
+<!--            {% if perms.mailling.change_message %}-->
                 <a href="{% url 'mailling:edit' object.message.pk %}" type="button" class="btn btn-sm btn-outline-secondary">Редактирование сообщения</a>
-            {% endif %}
-            {% if perms.mailling.delete_message %}
+<!--            {% endif %}-->
+<!--            {% if perms.mailling.delete_message %}-->
                 <a href="{% url 'mailling:delete' object.message.pk %}" type="button" class="btn btn-sm btn-outline-danger">Удаление сообщения</a>
-            {% endif %}
+<!--            {% endif %}-->
           </div>
         </div>
       </div>

@@ -30,18 +30,12 @@ class MaillingCreateView(CreateView):
         kwargs.update({'uid': self.request.user.id})
         return kwargs
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['title'] = "Создание рассылки"
-    #     return context
-
 
 class MaillingListView(ListView):
     model = Mailling
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['object_list'] = Message.objects.filter(user=self.kwargs.get('pk'))
         context['title'] = "Список рассылок"
         return context
 
@@ -55,10 +49,10 @@ class MaillingDetailView(DetailView):
         return context
 
 
-class MaillingUpdateView(PermissionRequiredMixin, UpdateView):
+class MaillingUpdateView(UpdateView):
     model = Mailling
     form_class = MaillingForm
-    permission_required = 'mailling.change_mailling'
+    # permission_required = 'mailling.change_mailling'
 
     def get_success_url(self):
         return reverse('mailling:mailling_view', args=[self.kwargs.get('pk')])
@@ -75,10 +69,10 @@ class MaillingUpdateView(PermissionRequiredMixin, UpdateView):
         return kwargs
 
 
-class MaillingDeleteView(PermissionRequiredMixin, DeleteView):
+class MaillingDeleteView(DeleteView):
     model = Mailling
     success_url = reverse_lazy('mailling:mailling_list')
-    permission_required = 'mailling.delete_mailling'
+    # permission_required = 'mailling.delete_mailling'
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
@@ -112,11 +106,11 @@ class MessageCreateView( CreateView):
         return super().form_valid(form)
 
 
-class MessageUpdateView(PermissionRequiredMixin, UpdateView):
+class MessageUpdateView(UpdateView):
     model = Message
     form_class = MessageForm
     success_url = reverse_lazy('mailling:mailling_list')
-    permission_required = 'mailling.change_message'
+    # permission_required = 'mailling.change_message'
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
@@ -125,10 +119,10 @@ class MessageUpdateView(PermissionRequiredMixin, UpdateView):
         return self.object
 
 
-class MessageDeleteView(PermissionRequiredMixin, DeleteView):
+class MessageDeleteView(DeleteView):
     model = Message
     success_url = reverse_lazy('mailling:mailling_list')
-    permission_required = 'mailling.delete_message'
+    # permission_required = 'mailling.delete_message'
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
